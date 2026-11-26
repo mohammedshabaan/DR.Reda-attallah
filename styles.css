@@ -1486,3 +1486,342 @@ dialog.paper-dialog::backdrop {
     border: 1px solid CanvasText;
   }
 }
+
+/* ==========================================================================
+   Mobile & touch refinements
+   ========================================================================== */
+:root {
+  --gutter: max(1rem, env(safe-area-inset-right, 0px), env(safe-area-inset-left, 0px));
+  scroll-padding-top: calc(5.25rem + env(safe-area-inset-top, 0px));
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container,
+.header-inner {
+  inline-size: min(100% - 2 * var(--gutter), var(--container-max));
+}
+
+.site-header {
+  padding-block-start: env(safe-area-inset-top, 0px);
+}
+
+.site-footer {
+  padding-block-end: calc(2.25rem + env(safe-area-inset-bottom, 0px));
+}
+
+button,
+.btn,
+summary,
+[role="tab"] {
+  touch-action: manipulation;
+}
+
+.menu-button {
+  min-block-size: 2.75rem;
+}
+
+/* In popover (narrow) mode the brand may shrink instead of pushing the menu button off-screen */
+.site-header:not(.is-wide) .header-inner > .site-brand {
+  flex-shrink: 1;
+  min-inline-size: 0;
+}
+
+.site-header:not(.is-wide) .brand-text {
+  min-inline-size: 0;
+}
+
+.site-header:not(.is-wide) .brand-name,
+.site-header:not(.is-wide) .brand-sub {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 40rem) {
+  .header-inner {
+    min-block-size: 3.75rem;
+    gap: 0.6rem;
+  }
+
+  .brand-mark {
+    inline-size: 2.2rem;
+    block-size: 2.2rem;
+  }
+
+  .site-header:not(.is-wide) .site-menu {
+    inline-size: min(calc(100dvw - 1.5rem), 24rem);
+    max-inline-size: none;
+  }
+
+  .site-header:not(.is-wide) .site-menu a {
+    min-block-size: 2.9rem;
+    font-size: 1rem;
+  }
+
+  /* Hero */
+  .hero-section {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .hero-grid {
+    gap: 1.5rem;
+  }
+
+  .hero-portrait-wrap {
+    order: -1;
+    inline-size: min(72%, 15rem);
+  }
+
+  .portrait-frame {
+    padding: 0.5rem;
+  }
+
+  .portrait-caption {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .portrait-caption .badge {
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: clamp(1.75rem, 8vw, 2.2rem);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    inline-size: 100%;
+  }
+
+  .academic-ids {
+    gap: 0.5rem;
+  }
+
+  .id-pill {
+    max-inline-size: 100%;
+    min-block-size: 2.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  .stats-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .stat-card {
+    padding: 0.9rem;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* Sections & cards */
+  .page-section {
+    padding-block: 2.5rem;
+  }
+
+  .section-header {
+    margin-block-end: 1.5rem;
+  }
+
+  .card,
+  .pub-card,
+  .award-card,
+  .spotlight-card {
+    padding: 1.05rem;
+  }
+
+  .timeline {
+    padding-inline-start: 1rem;
+    gap: 0.9rem;
+  }
+
+  .timeline-item {
+    padding: 0.95rem 1rem;
+  }
+
+  .timeline-item::before {
+    inset-inline-start: -1.43rem;
+  }
+
+  /* Publications toolbar */
+  .pub-search-box {
+    flex-basis: 100%;
+  }
+
+  .filter-pills {
+    flex: 1 1 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .filter-pill {
+    min-block-size: 2.75rem;
+    padding-inline: 0.4rem;
+    font-size: 0.82rem;
+  }
+
+  /* Tabs: show that the tab bar scrolls sideways */
+  .tablist-scroller {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.9rem, #000 calc(100% - 0.9rem), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 0.9rem, #000 calc(100% - 0.9rem), transparent);
+  }
+
+  .tablist-scroller [role="tab"] {
+    padding-inline: 0.85rem;
+  }
+
+  .tab-panel-inner {
+    padding: 0.85rem;
+  }
+
+  /* Tables become stacked cards (cells get data-label from app.js) */
+  .table-wrap {
+    overflow: visible;
+    border: 0;
+  }
+
+  .data-table,
+  .data-table tbody,
+  .data-table tr,
+  .data-table td,
+  .data-table caption {
+    display: block;
+  }
+
+  .data-table thead {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .data-table caption {
+    margin-block-end: 0.75rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+  }
+
+  .data-table tbody {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .data-table tr {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+  }
+
+  .data-table td {
+    padding: 0.5rem 0;
+    border-block-end: 1px dashed var(--border-subtle);
+    text-align: start;
+  }
+
+  .data-table td:last-child {
+    border-block-end: 0;
+  }
+
+  .data-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-block-end: 0.1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+  }
+
+  .data-table td:not([data-label])::before {
+    content: none;
+  }
+
+  /* Accordions */
+  .accordion-item > summary {
+    align-items: flex-start;
+    padding: 0.9rem 1rem;
+    line-height: 1.6;
+  }
+
+  .accordion-item > summary::before {
+    margin-block-start: 0.4em;
+  }
+
+  .accordion-body {
+    padding: 0 1rem 1rem;
+  }
+
+  /* Contact: long emails wrap, links are easy to tap */
+  .contact-list a,
+  .contact-list span,
+  .ref-card a {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-list a:not(.id-pill),
+  .ref-card a {
+    display: inline-block;
+    padding-block: 0.3rem;
+  }
+
+  /* Footer */
+  .footer-inner > div:last-child {
+    inline-size: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footer-inner > div:last-child .btn {
+    inline-size: 100%;
+  }
+
+  /* Dialog becomes a near-full-width sheet */
+  dialog.paper-dialog {
+    inline-size: calc(100dvw - 1rem);
+    max-inline-size: none;
+    max-block-size: 92dvh;
+    margin-block-end: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .dialog-inner {
+    padding: 1.1rem;
+    max-block-size: 92dvh;
+  }
+
+  .dialog-head h2 {
+    font-size: 1.1rem;
+  }
+
+  .dialog-inner > div:last-child {
+    flex-direction: column;
+  }
+
+  .dialog-inner > div:last-child .btn,
+  .dialog-inner > div:last-child form {
+    inline-size: 100%;
+  }
+}
+
+@media (max-width: 22rem) {
+  .stats-strip {
+    grid-template-columns: 1fr;
+  }
+}
