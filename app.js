@@ -284,4 +284,20 @@
       paperDialog.showModal();
     });
   }
+  /* ========================================================================
+     6. Responsive Tables: label each cell so rows can stack as cards on phones
+     ======================================================================== */
+  document.querySelectorAll('.data-table').forEach((table) => {
+    const labels = Array.from(table.querySelectorAll('thead th'), (th) => th.textContent.trim());
+    table.setAttribute('role', 'table');
+    table.querySelectorAll('thead, tbody').forEach((group) => group.setAttribute('role', 'rowgroup'));
+    table.querySelectorAll('th').forEach((th) => th.setAttribute('role', 'columnheader'));
+    table.querySelectorAll('tr').forEach((row) => {
+      row.setAttribute('role', 'row');
+      Array.from(row.querySelectorAll('td')).forEach((cell, i) => {
+        cell.setAttribute('role', 'cell');
+        if (labels[i]) cell.dataset.label = labels[i];
+      });
+    });
+  });
 })();
